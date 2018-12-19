@@ -1,17 +1,16 @@
-// register our component
 AFRAME.registerComponent('markerhandler', {
 
     init: function() {
         const animatedMarker = document.querySelector("#animated-marker");
+        const aEntity = document.querySelector("#tree-model");
 
-        animatedMarker.addEventListener('click', function(ev){
-            if (animatedMarker.object3D.visible == true && ev.detail.cursorEl) {
-                const entity = document.querySelector('#tree-model');
-                const scale = entity.getAttribute('scale');
+        // every click, we make our model grow in size :)
+        animatedMarker.addEventListener('click', function(ev, target){
+            const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
+            if (aEntity && intersectedElement === aEntity) {
+                const scale = aEntity.getAttribute('scale');
                 Object.keys(scale).forEach((key) => scale[key] = scale[key] + 1);
-
-                // every click, we make our model grow in size
-                entity.setAttribute('scale', scale);
+                aEntity.setAttribute('scale', scale);
             }
         });
 }});
